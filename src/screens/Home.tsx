@@ -10,21 +10,19 @@ import {
   View,
 } from 'react-native';
 import Task from '../components/Task';
-import { ITask } from '../interfaces/ITask';
-
-const generateId = () => Math.random().toString(36).substr(2, 9);
+import { useTask } from '../context/TaskContext';
 
 export default function Home() {
-  const [tasks, setTasks] = useState<ITask[]>([]);
-  const [task, setTask] = useState<string>(null);
+  const { addTask, taskItems, deleteTask } = useTask();
+  const [text, setText] = useState(null);
 
   const handleAddTask = () => {
-    const newTask = {
-      id: generateId(),
-      text: task,
-    };
-    setTasks([...tasks, newTask]);
-    setTask(null);
+    addTask(text);
+    setText(null);
+  };
+
+  const handleDeleteTask = (id: string) => {
+    deleteTask(id);
   };
 
   return (
@@ -38,9 +36,9 @@ export default function Home() {
         <View style={styles.tasksWrapper}>
           <Text style={styles.sectionTitle}>Tarefas de hoje</Text>
           <View style={styles.items}>
-            {tasks.map((task, index) => {
+            {taskItems.map((task, index) => {
               return (
-                <TouchableOpacity key={index}>
+                <TouchableOpacity key={index} onPress={() => handleDeleteTask(task.id)}>
                   <Task text={task.text} />
                 </TouchableOpacity>
               );
@@ -55,7 +53,7 @@ export default function Home() {
         <TextInput
           style={styles.input}
           placeholder={'Escreva a sua tarefa'}
-          onChangeText={text => setTask(text)}
+          onChangeText={text => setText(text)}
         />
         <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
