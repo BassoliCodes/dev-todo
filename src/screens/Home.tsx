@@ -39,7 +39,7 @@ export default function Home() {
             {taskItems.map((task, index) => {
               return (
                 <TouchableOpacity key={index} onPress={() => handleDeleteTask(task.id)}>
-                  <Task text={task.text} />
+                  <Task text={task.text} created_at={task.created_at} />
                 </TouchableOpacity>
               );
             })}
