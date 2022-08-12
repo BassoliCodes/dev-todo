@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "seasoncloud-mobile",
-    "slug": "seasoncloud-mobile",
+    "name": "dev-todo",
+    "slug": "dev-todo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
