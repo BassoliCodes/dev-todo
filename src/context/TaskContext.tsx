@@ -24,6 +24,7 @@ export const TaskProvider = ({ children }: any) => {
         id: generateRandomId(),
         text,
         done: false,
+        created_at: new Date(),
       },
     ]);
   };
