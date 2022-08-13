@@ -12,6 +12,8 @@ import {
 import Task from '../components/Task';
 import { useTask } from '../context/TaskContext';
 
+import { AntDesign } from '@expo/vector-icons';
+
 export default function Home() {
   const { addTask, taskItems, deleteTask } = useTask();
   const [text, setText] = useState(null);
@@ -57,7 +59,9 @@ export default function Home() {
         />
         <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
-            <Text style={styles.addText}>+</Text>
+            <Text style={styles.addText}>
+              <AntDesign name="plus" size={34} color="white" />
+            </Text>
           </View>
         </TouchableOpacity>
       </KeyboardAvoidingView>
@@ -86,8 +90,9 @@ const styles = StyleSheet.create({
     bottom: 60,
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    padding: 20,
   },
   input: {
     paddingVertical: 15,
@@ -96,7 +101,7 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     borderColor: '#C0C0C0',
     borderWidth: 1,
-    width: 250,
+    width: '80%',
   },
   addWrapper: {
     width: 60,
