@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -11,20 +11,20 @@ import { TaskProvider } from './src/context/TaskContext';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [isReady, setIsReady] = useState(false);
+
   return (
-    <>
-      <TaskProvider>
-        <NavigationContainer>
-          <StatusBar style="dark" />
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen name="Home" component={Home} options={{ title: `Seja bem-vindo(a)!` }} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </TaskProvider>
-    </>
+    <TaskProvider>
+      <NavigationContainer>
+        <StatusBar style="dark" />
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Home" component={Home} options={{ title: `Seja bem-vindo(a)!` }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </TaskProvider>
   );
 }
