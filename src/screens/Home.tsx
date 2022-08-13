@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -14,16 +15,19 @@ import { useTask } from '../context/TaskContext';
 
 import { AntDesign } from '@expo/vector-icons';
 
+import { Keyboard } from 'react-native';
+
 export default function Home() {
   const { addTask, taskItems, deleteTask } = useTask();
   const [text, setText] = useState(null);
 
-  const handleAddTask = () => {
+  const handleAddTask = async () => {
     addTask(text);
-    setText(null);
+    Keyboard.dismiss();
+    return Alert.alert('DEV TODO', 'Tarefa adicionada com sucesso!', [{ text: 'OK' }]);
   };
 
-  const handleDeleteTask = (id: string) => {
+  const handleDeleteTask = async (id: string) => {
     deleteTask(id);
   };
 
@@ -100,6 +104,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 10,
     borderColor: '#C0C0C0',
+    marginBottom: 20,
     borderWidth: 1,
     width: '80%',
     height: 60,
@@ -108,6 +113,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 10,
+    marginBottom: 20,
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: '#C0C0C0',
