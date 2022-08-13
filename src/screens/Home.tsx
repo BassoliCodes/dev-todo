@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -17,9 +17,14 @@ import { AntDesign } from '@expo/vector-icons';
 
 import { Keyboard } from 'react-native';
 
+import LottieView from 'lottie-react-native';
+
 export default function Home() {
   const { addTask, taskItems, deleteTask } = useTask();
   const [text, setText] = useState<string>(null);
+
+  const animation = useRef(null);
+  const animationFile = require('../../assets/animations/not-found.json');
 
   const handleAddTask = async () => {
     if (!text) {
@@ -47,13 +52,29 @@ export default function Home() {
         <View style={styles.tasksWrapper}>
           <Text style={styles.sectionTitle}>Tarefas de hoje</Text>
           <View style={styles.items}>
-            {taskItems.map((task, index) => {
-              return (
-                <TouchableOpacity key={index} onPress={() => handleDeleteTask(task.id)}>
-                  <Task text={task.text} created_at={task.created_at} />
-                </TouchableOpacity>
-              );
-            })}
+            {taskItems.length > 0 ? (
+              <>
+                {taskItems.map((task, index) => {
+                  return (
+                    <TouchableOpacity key={index} onPress={() => handleDeleteTask(task.id)}>
+                      <Task text={task.text} created_at={task.created_at} />
+                    </TouchableOpacity>
+                  );
+                })}
+              </>
+            ) : (
+              <Text style={styles.noTasks}>
+                <LottieView
+                  autoPlay
+                  ref={animation}
+                  style={{
+                    width: 400,
+                    backgroundColor: 'transparent',
+                  }}
+                  source={animationFile}
+                />
+              </Text>
+            )}
           </View>
         </View>
       </ScrollView>
@@ -94,6 +115,15 @@ const styles = StyleSheet.create({
   },
   items: {
     marginTop: 30,
+  },
+  noTasks: {
+    fontSize: 18,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    marginTop: 100,
+    flexDirection: 'column',
   },
   writeTaskWrapper: {
     position: 'absolute',
