@@ -16,7 +16,11 @@ export default function App() {
       <TaskProvider>
         <NavigationContainer>
           <StatusBar style="dark" />
-          <Stack.Navigator>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
             <Stack.Screen name="Home" component={Home} options={{ title: `Seja bem-vindo(a)!` }} />
           </Stack.Navigator>
         </NavigationContainer>
