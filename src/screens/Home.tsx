@@ -19,7 +19,7 @@ import { Keyboard } from 'react-native';
 
 export default function Home() {
   const { addTask, taskItems, deleteTask } = useTask();
-  const [text, setText] = useState(null);
+  const [text, setText] = useState<string>(null);
 
   const handleAddTask = async () => {
     if (!text) {
@@ -27,6 +27,7 @@ export default function Home() {
     }
 
     addTask(text);
+    setText(null);
     Keyboard.dismiss();
     return Alert.alert('DEV TODO', 'Tarefa adicionada com sucesso!', [{ text: 'OK' }]);
   };
@@ -63,6 +64,7 @@ export default function Home() {
         <TextInput
           style={styles.input}
           placeholder={'Escreva a sua tarefa'}
+          defaultValue={text}
           onChangeText={text => setText(text)}
         />
         <TouchableOpacity onPress={() => handleAddTask()}>
