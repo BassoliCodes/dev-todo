@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: 'white',
   },
   input: {
     paddingVertical: 15,
