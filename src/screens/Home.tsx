@@ -22,6 +22,10 @@ export default function Home() {
   const [text, setText] = useState(null);
 
   const handleAddTask = async () => {
+    if (!text) {
+      return Alert.alert('Ops!', 'Para adicionar uma tarefa, digite algo na caixa de texto.');
+    }
+
     addTask(text);
     Keyboard.dismiss();
     return Alert.alert('DEV TODO', 'Tarefa adicionada com sucesso!', [{ text: 'OK' }]);
