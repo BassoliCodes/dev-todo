@@ -9,18 +9,18 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Keyboard,
 } from 'react-native';
 import Task from '../components/Task';
 import { useTask } from '../context/TaskContext';
 
 import { AntDesign } from '@expo/vector-icons';
 
-import { Keyboard } from 'react-native';
-
 import LottieView from 'lottie-react-native';
+import { ITask } from '../interfaces/ITask';
 
 export default function Home() {
-  const { addTask, taskItems, deleteTask } = useTask();
+  const { addTask, taskItems, deleteTask, taskDone } = useTask();
   const [text, setText] = useState<string>(null);
 
   const animation = useRef(null);
@@ -34,11 +34,27 @@ export default function Home() {
     addTask(text);
     setText(null);
     Keyboard.dismiss();
+
     return Alert.alert('DEV TODO', 'Tarefa adicionada com sucesso!', [{ text: 'OK' }]);
   };
 
-  const handleDeleteTask = async (id: string) => {
-    deleteTask(id);
+  const handleTask = async (id: string) => {
+    if (!id) {
+      return Alert.alert('Ops!', 'Não foi possível encontrar a tarefa.');
+    }
+
+    const task = taskItems.find((task: ITask) => task.id === id);
+
+    Alert.alert('DEV TODO', 'O que deseja fazer com essa tarefa?', [
+      {
+        text: 'Excluir',
+        onPress: () => deleteTask(id),
+      },
+      {
+        text: !task.done ? 'Marcar como concluída' : 'Remover de concluída',
+        onPress: () => taskDone(id),
+      },
+    ]);
   };
 
   return (
@@ -56,8 +72,8 @@ export default function Home() {
               <>
                 {taskItems.map((task, index) => {
                   return (
-                    <TouchableOpacity key={index} onPress={() => handleDeleteTask(task.id)}>
-                      <Task text={task.text} created_at={task.created_at} />
+                    <TouchableOpacity key={index} onPress={() => handleTask(task.id)}>
+                      <Task text={task.text} created_at={task.created_at} done={task.done} />
                     </TouchableOpacity>
                   );
                 })}
@@ -78,10 +94,7 @@ export default function Home() {
           </View>
         </View>
       </ScrollView>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.writeTaskWrapper}
-      >
+      <KeyboardAvoidingView style={styles.writeTaskWrapper} behavior="height">
         <TextInput
           style={styles.input}
           placeholder={'Escreva a sua tarefa'}
@@ -111,7 +124,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins_700Bold',
   },
   items: {
     marginTop: 30,
@@ -127,12 +140,12 @@ const styles = StyleSheet.create({
   },
   writeTaskWrapper: {
     position: 'absolute',
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 30 : 0,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 20,
+    padding: Platform.OS === 'ios' ? 40 : 15,
     backgroundColor: 'white',
   },
   input: {
@@ -141,6 +154,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 10,
     borderColor: '#C0C0C0',
+    fontFamily: 'Poppins_400Regular',
     borderWidth: 1,
     width: '80%',
     height: 60,

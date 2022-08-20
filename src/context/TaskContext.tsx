@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import { Alert } from 'react-native';
 
 import { ITask } from '../interfaces/ITask';
 
@@ -6,6 +7,7 @@ interface ITaskContext {
   taskItems: ITask[];
   addTask(text: string): void;
   deleteTask(id: string): void;
+  taskDone(id: string): void;
 }
 
 const TaskContext = createContext<ITaskContext>({} as ITaskContext);
@@ -33,12 +35,25 @@ export const TaskProvider = ({ children }: any) => {
     setTaskItems(taskItems.filter((task: ITask) => task.id !== id));
   };
 
+  const taskDone = (id: string) => {
+    const task = taskItems.find((task: ITask) => task.id === id);
+
+    if (task) {
+      task.done = !task.done;
+
+      setTaskItems([...taskItems]);
+    } else {
+      Alert.alert('Ops!', 'Não foi possível marcar a tarefa como concluída.');
+    }
+  };
+
   return (
     <TaskContext.Provider
       value={{
         taskItems,
         addTask,
         deleteTask,
+        taskDone,
       }}
     >
       {children}
