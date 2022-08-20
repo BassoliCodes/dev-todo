@@ -2,13 +2,9 @@
 
 An open-source project that I'm created for developers to create their own to-do's, will be a small project just for React Native training, but in the future I intend to put a backend with several systems.
 
-## Demo
+## Video DEMO
 
-https://i.imgur.com/7OLSPrM.png
-
-## Screenshots
-
-![App](https://i.imgur.com/7OLSPrM.png)
+https://i.imgur.com/djznWhW.mp4
 
 ## Run Locally
 
