@@ -73,7 +73,12 @@ export default function Home() {
                 {taskItems.map((task, index) => {
                   return (
                     <TouchableOpacity key={index} onPress={() => handleTask(task.id)}>
-                      <Task text={task.text} created_at={task.created_at} done={task.done} />
+                      <Task
+                        id={task.id}
+                        text={task.text}
+                        created_at={task.created_at}
+                        done={task.done}
+                      />
                     </TouchableOpacity>
                   );
                 })}
@@ -140,12 +145,12 @@ const styles = StyleSheet.create({
   },
   writeTaskWrapper: {
     position: 'absolute',
-    bottom: Platform.OS === 'ios' ? 30 : 0,
+    bottom: 0,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: Platform.OS === 'ios' ? 40 : 15,
+    padding: Platform.OS === 'ios' ? 30 : 15,
     backgroundColor: 'white',
   },
   input: {

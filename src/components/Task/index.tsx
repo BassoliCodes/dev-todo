@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { AntDesign } from '@expo/vector-icons';
-
 import { format } from 'date-fns';
-import { useTask } from '../../context/TaskContext';
 
-export default function Task(props: any) {
-  const { text, created_at } = props;
+import { ITask } from '../../interfaces/ITask';
+
+export default function Task(props: ITask) {
+  const { text, created_at, done } = props;
 
   return (
     <View style={styles.task}>
@@ -15,7 +15,7 @@ export default function Task(props: any) {
         {format(new Date(created_at), "dd/MM/yyyy 'às' HH:mm")}
       </Text>
       <View style={styles.taskStatus}>
-        {props.done ? <AntDesign name="checkcircle" size={24} color="#00FF00" /> : null}
+        {done ? <AntDesign name="checkcircle" size={24} color="#00FF00" /> : null}
       </View>
     </View>
   );
