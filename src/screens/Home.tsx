@@ -59,14 +59,14 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-        }}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style={styles.tasksWrapper}>
-          <Text style={styles.sectionTitle}>Tarefas de hoje</Text>
+      <View style={styles.tasksWrapper}>
+        <Text style={styles.sectionTitle}>Tarefas de hoje</Text>
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+          }}
+          keyboardShouldPersistTaps="handled"
+        >
           <View style={styles.items}>
             {taskItems.length > 0 ? (
               <>
@@ -97,8 +97,8 @@ export default function Home() {
               </Text>
             )}
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
       <KeyboardAvoidingView style={styles.writeTaskWrapper} behavior="height">
         <TextInput
           style={styles.input}
